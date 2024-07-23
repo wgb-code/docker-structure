@@ -6,7 +6,7 @@ Antes de manipularmos o docker em nossa aplicação 🚨 DEVERÁ SER AJUSTADO O 
 Abaixo, está o código que deverá ser substituido nas variaveis de ambiente de DATABASE de nossa aplicação:
 
     DB_CONNECTION=pgsql
-    DB_HOST=postgres
+    DB_HOST=localhost
     DB_PORT=5432
     DB_DATABASE=laravelmarketplace
     DB_USERNAME=twodevelopers
