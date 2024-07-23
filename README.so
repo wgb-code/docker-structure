@@ -1,0 +1,64 @@
+
+## Como executar o projeto
+
+**Configuração do .env**
+
+Antes de manipularmos o docker em nossa aplicação **🚨 DEVERÁ SER AJUSTADO O .ENV**
+
+Abaixo, está o código que deverá ser substituido nas variaveis de ambiente de DATABASE de nossa aplicação:
+
+```
+    DB_CONNECTION=pgsql
+    DB_HOST=postgres
+    DB_PORT=5432
+    DB_DATABASE=laravelmarketplace
+    DB_USERNAME=twodevelopers
+    DB_PASSWORD=c_z7@Oc*@65s
+```
+*Caso o passo acima seja ignorado, irá disparar erro na hora de rodarmos as migrates e para solucionar, deverá ser derrubado o container, configurado o .env e ai sim manipularmos o docker novamente.*
+
+**Criar imagem da nossa aplicação**
+
+Devemos primeiramente criar uma imagem do docker de nossa aplicação, para isto, dentro do terminal execute o comando:
+
+    docker-compose build
+
+**Criar container da nossa aplicação**
+
+Após termos a imagem gerada, devemos executar nossa imagem e container:
+
+    docker-compose up -d
+
+É esperado que essas ações criem nossa imagem e inicializem o container para desenvolvimento da aplicação, mas é interessante se certificarmos que o container está funcionando sem demais problemas.
+
+Podemos usar o comando:
+
+    docker-compose logs
+
+Para verificarmos o estado de nossos containers **é esperado que seja listado os mesmos após a execução deste comando**
+
+O comando ```docker-compose logs``` pode ser usada de forma especifica em um comando, por exemplo: ```docker-compose logs laravel``` será verificado apenas o container laravel.
+
+**Se algum erro ocorrer**
+
+Vamos primeiramente derrubar nosso container utilizando o comando ```docker-compose down``` e posteriormente a isto verificar todo o problema e solucionarmos. Após isto, deveremos buildar novamente o container com ```docker-compose build``` e subir a aplicação com ```docker-compose up-d``` para testa-la novamente.
+
+**Rodar as migrates**
+
+Para rodarmos a nossa migrate será necessário antes rodar o comando ```docker-compose up -d```, após isto, vamos executar o seguinte comando em nosso terminal:
+
+    docker-compose exec laravel php artisan migrate
+
+Sim, a migrate é rodada dentro do nosso container e não dentro da nossa aplicação geral. Este processo serve também para as **Seed**:
+
+    docker-compose exec laravel php artisan db:seed
+
+### Rodando a aplicação
+
+Para rodarmos a aplicação iremos seguir os seguintes passos:
+
+- Rodar os container: ```docker-compose up -d```
+- Executar o container laravel: ```docker-compose exec laravel bash```
+- Dentro do container, executar o comando: ```php artisan serve --host=0.0.0.0```
+
+Após isto, podemos acessar em nosso navegador a url: ```http://localhost:8000```
